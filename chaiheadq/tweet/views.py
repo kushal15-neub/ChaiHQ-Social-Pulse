@@ -1,4 +1,3 @@
-
 from django.shortcuts import render
 from .models import Tweet
 from .forms import TweetForm
@@ -24,30 +23,27 @@ def tweet_create(request):
     else:
         form = TweetForm()
         return render(request, 'tweet_form.html', {'form': form})
-    
-    
-    
-    # edit tweet
-    
-    def tweet_edit(request,tweet_id):
-        tweet=get_object_or_404(Tweet, pk=tweet_id, user=request.user)
-        
-        if request.method == 'POST':
-            form = TweetForm(request.POST, request.FILES, instance=tweet)
-            if form.is_valid():
-                form.save(commit=False)
-                return redirect('tweet_list')
-        else:
-            form=TweetForm(instance=tweet)
-            return render(request, 'tweet_form.html', {'form': form})
-    
-    # Delete tweet
-    
-    def tweet_delete(request, tweet_id):
-       tweet=get_object_or_404(Tweet, pk=tweet_id, user=request.user).delete()
 
+
+def tweet_edit(request, tweet_id):
+    tweet = get_object_or_404(Tweet, pk=tweet_id, user=request.user)
+    
     if request.method == 'POST':
-       tweet.delete()
-       return redirect('tweet_list')
+        form = TweetForm(request.POST, request.FILES, instance=tweet)
+        if form.is_valid():
+            form.save()
+            return redirect('tweet_list')
     else:
-       return render(request, 'tweet_confirm_delete.html', {'tweet': tweet})
+        form = TweetForm(instance=tweet)
+    
+    return render(request, 'tweet_form.html', {'form': form})
+
+
+def tweet_delete(request, tweet_id):
+    tweet = get_object_or_404(Tweet, pk=tweet_id, user=request.user)
+    
+    if request.method == 'POST':
+        tweet.delete()
+        return redirect('tweet_list')
+    else:
+        return render(request, 'tweet_confirm_delete.html', {'tweet': tweet})
