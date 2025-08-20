@@ -1,0 +1,449 @@
+{% extends "layout.html" %}
+{% block title %}Register - ChaiHeadQ{% endblock %}
+
+{% block content %}
+<div class="auth-container">
+  <div class="auth-card">
+    <div class="auth-header">
+      <div class="auth-icon">
+        <i class="fas fa-user-plus"></i>
+      </div>
+      <h1 class="auth-title">Create Account</h1>
+      <p class="auth-subtitle">Join our vibrant community and start sharing your thoughts</p>
+    </div>
+
+    <form method="post" class="auth-form">
+      {% csrf_token %}
+      
+      <div class="form-group">
+        <label for="{{ form.username.id_for_label }}" class="form-label">
+          <i class="fas fa-user me-2"></i>Username
+        </label>
+        {{ form.username }}
+        {% if form.username.errors %}
+          <div class="error-message">
+            {% for error in form.username.errors %}
+              <i class="fas fa-exclamation-circle me-1"></i>{{ error }}
+            {% endfor %}
+          </div>
+        {% endif %}
+      </div>
+
+      <div class="form-group">
+        <label for="{{ form.email.id_for_label }}" class="form-label">
+          <i class="fas fa-envelope me-2"></i>Email
+        </label>
+        {{ form.email }}
+        {% if form.email.errors %}
+          <div class="error-message">
+            {% for error in form.email.errors %}
+              <i class="fas fa-exclamation-circle me-1"></i>{{ error }}
+            {% endfor %}
+          </div>
+        {% endif %}
+      </div>
+
+      <div class="form-group">
+        <label for="{{ form.password1.id_for_label }}" class="form-label">
+          <i class="fas fa-lock me-2"></i>Password
+        </label>
+        {{ form.password1 }}
+        {% if form.password1.errors %}
+          <div class="error-message">
+            {% for error in form.password1.errors %}
+              <i class="fas fa-exclamation-circle me-1"></i>{{ error }}
+            {% endfor %}
+          </div>
+        {% endif %}
+      </div>
+
+      <div class="form-group">
+        <label for="{{ form.password2.id_for_label }}" class="form-label">
+          <i class="fas fa-lock me-2"></i>Confirm Password
+        </label>
+        {{ form.password2 }}
+        {% if form.password2.errors %}
+          <div class="error-message">
+            {% for error in form.password2.errors %}
+              <i class="fas fa-exclamation-circle me-1"></i>{{ error }}
+            {% endfor %}
+          </div>
+        {% endif %}
+      </div>
+
+      <button type="submit" class="auth-submit-btn">
+        <span class="btn-text">Create Account</span>
+        <span class="btn-icon"><i class="fas fa-arrow-right"></i></span>
+      </button>
+    </form>
+
+    <div class="auth-footer">
+      <p>Already have an account? 
+        <a href="{% url 'login' %}" class="auth-link">
+          <i class="fas fa-sign-in-alt me-1"></i>Sign In
+        </a>
+      </p>
+    </div>
+
+    <!-- Decorative Elements -->
+    <div class="auth-decoration auth-decoration-1"></div>
+    <div class="auth-decoration auth-decoration-2"></div>
+    <div class="auth-decoration auth-decoration-3"></div>
+  </div>
+</div>
+
+<style>
+  .auth-container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1rem;
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%);
+  }
+
+  .auth-card {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    border-radius: 24px;
+    padding: 3rem;
+    width: 100%;
+    max-width: 480px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    position: relative;
+    overflow: hidden;
+    animation: slideInUp 0.8s ease-out;
+  }
+
+  .auth-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color), var(--accent-color));
+    border-radius: 24px 24px 0 0;
+  }
+
+  .auth-header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+  }
+
+  .auth-icon {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem;
+    box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
+    animation: float 3s ease-in-out infinite;
+  }
+
+  .auth-icon i {
+    font-size: 2rem;
+    color: white;
+  }
+
+  .auth-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 1rem;
+  }
+
+  .auth-subtitle {
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+    margin: 0;
+  }
+
+  .auth-form {
+    margin-bottom: 2rem;
+  }
+
+  .form-group {
+    margin-bottom: 1.5rem;
+  }
+
+  .form-label {
+    display: block;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
+  }
+
+  .form-label i {
+    color: var(--primary-color);
+  }
+
+  .auth-form input {
+    width: 100%;
+    padding: 1rem 1.2rem;
+    border: 2px solid rgba(226, 232, 240, 0.8);
+    border-radius: 12px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+  }
+
+  .auth-form input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+    background: rgba(255, 255, 255, 0.95);
+    transform: translateY(-2px);
+  }
+
+  .auth-form input:hover {
+    border-color: rgba(99, 102, 241, 0.5);
+    transform: translateY(-1px);
+  }
+
+  .error-message {
+    color: var(--danger-color);
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+    padding: 0.5rem 0.8rem;
+    background: rgba(239, 68, 68, 0.1);
+    border-radius: 8px;
+    border-left: 3px solid var(--danger-color);
+    animation: shake 0.5s ease-in-out;
+  }
+
+  .auth-submit-btn {
+    width: 100%;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    border: none;
+    padding: 1.2rem;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    box-shadow: 0 8px 25px rgba(99, 102, 241, 0.3);
+  }
+
+  .auth-submit-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s ease;
+  }
+
+  .auth-submit-btn:hover::before {
+    left: 100%;
+  }
+
+  .auth-submit-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 40px rgba(99, 102, 241, 0.4);
+  }
+
+  .auth-submit-btn:active {
+    transform: translateY(-1px);
+  }
+
+  .btn-text {
+    transition: all 0.3s ease;
+  }
+
+  .btn-icon {
+    transition: all 0.3s ease;
+  }
+
+  .auth-submit-btn:hover .btn-icon {
+    transform: translateX(5px);
+  }
+
+  .auth-footer {
+    text-align: center;
+    color: var(--text-secondary);
+  }
+
+  .auth-link {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    display: inline-block;
+  }
+
+  .auth-link:hover {
+    background: rgba(99, 102, 241, 0.1);
+    color: var(--secondary-color);
+    transform: translateY(-2px);
+  }
+
+  /* Decorative Elements */
+  .auth-decoration {
+    position: absolute;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    opacity: 0.1;
+    animation: float 6s ease-in-out infinite;
+  }
+
+  .auth-decoration-1 {
+    width: 100px;
+    height: 100px;
+    top: -50px;
+    right: -50px;
+    animation-delay: 0s;
+  }
+
+  .auth-decoration-2 {
+    width: 60px;
+    height: 60px;
+    bottom: -30px;
+    left: -30px;
+    animation-delay: 2s;
+  }
+
+  .auth-decoration-3 {
+    width: 40px;
+    height: 40px;
+    top: 50%;
+    right: -20px;
+    animation-delay: 4s;
+  }
+
+  /* Animations */
+  @keyframes slideInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+  }
+
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+  }
+
+  /* Responsive Design */
+  @media (max-width: 576px) {
+    .auth-card {
+      padding: 2rem 1.5rem;
+      margin: 1rem;
+    }
+    
+    .auth-title {
+      font-size: 2rem;
+    }
+    
+    .auth-icon {
+      width: 60px;
+      height: 60px;
+    }
+    
+    .auth-icon i {
+      font-size: 1.5rem;
+    }
+  }
+
+  /* Loading State */
+  .auth-submit-btn.loading {
+    pointer-events: none;
+  }
+
+  .auth-submit-btn.loading .btn-text {
+    opacity: 0;
+  }
+
+  .auth-submit-btn.loading .btn-icon {
+    animation: spin 1s linear infinite;
+  }
+
+  @keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const form = document.querySelector('.auth-form');
+    const submitBtn = document.querySelector('.auth-submit-btn');
+    const inputs = document.querySelectorAll('.auth-form input');
+
+    // Add floating labels effect
+    inputs.forEach(input => {
+      input.addEventListener('focus', function() {
+        this.parentElement.classList.add('focused');
+      });
+
+      input.addEventListener('blur', function() {
+        if (!this.value) {
+          this.parentElement.classList.remove('focused');
+        }
+      });
+    });
+
+    // Form submission with loading state
+    form.addEventListener('submit', function(e) {
+      submitBtn.classList.add('loading');
+      submitBtn.querySelector('.btn-text').textContent = 'Creating Account...';
+    });
+
+    // Add ripple effect to submit button
+    submitBtn.addEventListener('click', function(e) {
+      const ripple = document.createElement('span');
+      const rect = this.getBoundingClientRect();
+      const size = Math.max(rect.width, rect.height);
+      const x = e.clientX - rect.left - size / 2;
+      const y = e.clientY - rect.top - size / 2;
+      
+      ripple.style.width = ripple.style.height = size + 'px';
+      ripple.style.left = x + 'px';
+      ripple.style.top = y + 'px';
+      ripple.classList.add('ripple');
+      
+      this.appendChild(ripple);
+      
+      setTimeout(() => {
+        ripple.remove();
+      }, 600);
+    });
+
+    // Add floating animation to decorative elements
+    const decorations = document.querySelectorAll('.auth-decoration');
+    decorations.forEach((dec, index) => {
+      dec.style.animationDelay = `${index * 2}s`;
+    });
+  });
+</script>
+{% endblock %}

@@ -4,5 +4,10 @@
 {% endblock %}
 
 {% block content %}
-    <h1>Welcome to the Index Page</h1>
+    <h1>Are you sure you want to delete this tweet?</h1>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Confirm</button>
+        <a class="btn btn-success" href="{% url 'tweet_list' %}">Cancel</a>
+    </form>
 {% endblock %}
